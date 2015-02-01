@@ -41,6 +41,7 @@ public class Server extends Network {
             }
             killClients();
         } catch (Exception e) {
+            e.printStackTrace();
             frame.connectionFailed("Sorry, something went wrong.");
         }
         close();
@@ -61,6 +62,9 @@ public class Server extends Network {
             case "cancell":
                 frame.cancellQuestionAndSolution(id);
                 break;
+            case "destroy":
+                action(id, hostName, studentName, "cancell");
+                break;
             case "quit":
                 action(id, hostName, studentName, "cancell");
                 clients.remove(id);
@@ -75,7 +79,7 @@ public class Server extends Network {
     }
     private synchronized void killClients() {
         for (Integer key : clients.keySet()) {
-            clients.get(key).close();
+            clients.get(key).destroy();
         }
         clients.clear();
     }

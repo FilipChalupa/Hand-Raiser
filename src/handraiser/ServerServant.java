@@ -78,6 +78,13 @@ public class ServerServant extends Thread {
             // Warning: Action was not sent
         }
     }
+    public synchronized void destroy() {
+        isRunning = false;
+        server.action(id, hostName, studentName, "destroy");
+        try {
+            socket.close();
+        } catch (IOException e) {}
+    }
     public synchronized void close() {
         isRunning = false;
         server.action(id, hostName, studentName, "quit");
